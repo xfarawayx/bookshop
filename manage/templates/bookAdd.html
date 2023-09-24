@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建图书</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+</head>
+<body>
+    {% include "navigateManage.html" %}
+    <div class="container mt-5">
+        <h1>创建图书</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="bnum">图书编号:</label>
+                <input type="text" class="form-control" id="bnum" name="bnum"">
+            </div>
+            <div class="form-group">
+                <label for="btype">图书类型:</label>
+                <input type="text" class="form-control" id="btype" name="btype">
+            </div>
+            <div class="form-group">
+                <label for="name">图书名称:</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <div class="form-group">
+                <label for="price">图书价格:</label>
+                <input type="text" class="form-control" id="price" name="price">
+            </div>
+            <div class="form-group">
+                <label for="overplus">图书余量:</label>
+                <input type="text" class="form-control" id="overplus" name="overplus">
+            </div>
+            <button type="submit" class="btn btn-primary">创建图书</button>
+        </form>
+    </div>
+
+    <!-- 引入Bootstrap的JavaScript文件 -->
+    <footer class="text-center py-4">
+      <p>&copy; 2023 网上书店系统</p>
+    </footer>
+    <script src="/static/jquery-3.5.1.slim.min.js"></script>
+    <script src="/static/bootstrap.min.js"></script>
+</body>
+{% include "script.html" %}
+</html>

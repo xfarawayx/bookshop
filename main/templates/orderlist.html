@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>网上书店系统</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+</head>
+<body>
+  {% include "navigate.html" with username=username %}
+    
+    <div class="container mt-4">
+        <h1>我的订单</h1>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>订单编号</th>
+                        <th>订购图书编号</th>
+                        <th>订购图书名称</th>
+                        <th>订购图书价格</th>
+                        <th>订单地址</th>
+                        <th>下单时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td>{{ order.onum }}</td>
+                            <td>{{ order.bnum }}</td>
+                            <td>{{ order.bnum.bname }}</td>
+                            <td>{{ order.bnum.price }}</td>
+                            <td>{{ order.unum.address }}</td>
+                            {% load humanize %}
+                            <td>{{ order.date | date:"Y年n月j日G:i"}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div>
+    <footer class="text-center py-4">
+      <p>&copy; 2023 网上书店系统</p>
+    </footer>
+    <script src="/static/jquery-3.5.1.slim.min.js"></script>
+    <script src="/static/bootstrap.min.js"></script>
+</body>
+{% include "script.html" %}
+</html>

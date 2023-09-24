@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户注册</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+</head>
+<body>
+  {% include "navigate.html" with username=username %}
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <h5 class="card-header">用户信息修改</h5>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" name="usr" placeholder="用户名" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="psw" placeholder="原密码（必填）" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="npsw" placeholder="新密码" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="npswc" placeholder="确认密码" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="contact" placeholder="联系方式" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="address" placeholder="收货地址" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">确认修改</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+    <!-- 引入Bootstrap的JavaScript文件 -->
+    <footer class="text-center py-4">
+      <p>&copy; 2023 网上书店系统</p>
+    </footer>
+    <script src="/static/jquery-3.5.1.slim.min.js"></script>
+    <script src="/static/bootstrap.min.js"></script>
+</body>
+{% include "script.html" %}
+</html>

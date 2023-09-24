@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息管理</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+</head>
+<body>
+  {% include "navigateManage.html" %}
+    <div class="container mt-4">
+        <h1>用户信息列表</h1>
+        <form method="post">
+            {% csrf_token %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>选择</th>
+                        <th>编号</th>
+                        <th>用户名</th>
+                        <th>联系方式</th>
+                        <th>收货地址</th>
+                        <th>状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td><input type="checkbox" name="selected_users" value="{{ user.unum }}" onclick="handleCheckboxClick(this)"></td>
+                            <td>{{ user.unum }}</td>
+                            <td>{{ user.uname }}</td>
+                            <td>{{ user.contact }}</td>
+                            <td>{{ user.address }}</td>
+                            <td>{% if user.state %}正常{% else %}待审核{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" name="edit" class="btn btn-primary">修改信息</button>
+            <button type="submit" name="view" class="btn btn-success">查看订单</button>
+            <a href="#" onclick="showConfirmation()" class="btn btn-danger">重置密码</a>
+        </form>
+    </div>
+    <!-- 引入Bootstrap的JavaScript文件 -->
+    <footer class="text-center py-4">
+      <p>&copy; 2023 网上书店系统</p>
+    </footer>
+    <script src="/static/jquery-3.5.1.slim.min.js"></script>
+    <script src="/static/bootstrap.min.js"></script>
+</body>
+<script>
+    function handleCheckboxClick(checkbox) {
+        const checkboxes = document.getElementsByName('selected_users');
+        checkboxes.forEach((cb) => {
+            if (cb !== checkbox) {
+                cb.checked = false;
+            }
+        });
+    }
+</script>
+<script>
+    function showConfirmation() {
+      const selectedBooks = document.getElementsByName('selected_users');
+      const selectedbnums = [];
+      selectedBooks.forEach((checkbox) => {
+          if (checkbox.checked) {
+              selectedbnums.push(checkbox.value);
+          }
+      });
+  
+      if (selectedbnums.length > 0) {
+          if (confirm('确定要重置该用户的密码吗？')) {
+              const bnumsParam = selectedbnums.join('&unum=');
+              window.location.href = "{% url 'userReset' %}?unum=" + bnumsParam;
+          }
+      }
+    }
+  </script>
+{% include "script.html" %}
+</html>

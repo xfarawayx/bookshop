@@ -1,0 +1,29 @@
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-book"></i>网上书店系统</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <div class="nav-link"> 欢迎您，{{ username }}！</div>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'profile' %}" class="nav-link"><i class="fas fa-user"></i> 个人信息</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'booklist' %}" class="nav-link"><i class="fas fa-book"></i> 购买图书</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'orderlist' %}" class="nav-link"><i class="fas fa-list-alt"></i> 查看订单</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> 登出账号</a>
+                </li>
+            </ul>
+            </div>
+        </div>
+    </nav>

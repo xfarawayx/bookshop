@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户个人信息</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+</head>
+<body>
+    {% include "navigate.html" with username=username %}
+
+    <div class="container mt-5">
+        <h1 class="display-6">用户个人信息</h1>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5 class="card-title">用户编号:</h5>
+                    </div>
+                    <div class="col-md-9">
+                        <p class="card-text">{{ usernum }}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="card-title">用户名:</h5>
+                    </div>
+                    <div class="col-md-9">
+                        <p class="card-text">{{ username }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5 class="card-title">联系方式:</h5>
+                    </div>
+                    <div class="col-md-9">
+                        <p class="card-text">{{ contact }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5 class="card-title">收货地址:</h5>
+                    </div>
+                    <div class="col-md-9">
+                        <p class="card-text">{{ address }}</p>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{% url 'modify' %}" class="btn btn-primary">修改个人信息</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入Bootstrap的JavaScript文件 -->
+    <footer class="text-center py-4">
+      <p>&copy; 2023 网上书店系统</p>
+    </footer>
+    <script src="/static/jquery-3.5.1.slim.min.js"></script>
+    <script src="/static/bootstrap.min.js"></script>
+</body>
+{% include "script.html" %}
+</html>

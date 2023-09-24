@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>网上书店系统</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+</head>
+<body>
+  {% include "navigateManage.html" %}
+    <div class="container mt-4">
+        <h1>图书列表</h1>
+        <form method="post">
+            {% csrf_token %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>选择</th>
+                        <th>图书编号</th>
+                        <th>图书类型</th>
+                        <th>图书名称</th>
+                        <th>图书价格</th>
+                        <th>图书余量</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                        <tr>
+                          <td><input type="checkbox" name="selected_books" value="{{ book.bnum }}" onclick="handleCheckboxClick(this)"></td>
+                            <td>{{ book.bnum }}</td>
+                            <td>{{ book.btype }}</td>
+                            <td>{{ book.bname }}</td>
+                            <td>{{ book.price }}</td>
+                            <td>{{ book.overplus }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">修改选定图书信息</button>
+            <a href="#" onclick="showConfirmation()" class="btn btn-danger">删除选定图书</a>
+            <div class="float-right">
+                <a href="{% url 'bookAdd' %}" class="btn btn-primary">创建新图书</a>
+            </div>
+        </form>
+    </div>
+    <footer class="text-center py-4">
+      <p>&copy; 2023 网上书店系统</p>
+    </footer>
+    <script src="/static/jquery-3.5.1.slim.min.js"></script>
+    <script src="/static/bootstrap.min.js"></script>
+</body>
+<script>
+  function showConfirmation() {
+    const selectedBooks = document.getElementsByName('selected_books');
+    const selectedbnums = [];
+    selectedBooks.forEach((checkbox) => {
+        if (checkbox.checked) {
+            selectedbnums.push(checkbox.value);
+        }
+    });
+
+    if (selectedbnums.length > 0) {
+        if (confirm('确定要删除选定的图书吗？')) {
+            // 如果用户点击确认按钮，跳转到删除视图
+            const bnumsParam = selectedbnums.join('&bnum=');
+            window.location.href = "{% url 'bookDelete' %}?bnum=" + bnumsParam;
+        }
+    } else {
+        alert('请选择要删除的图书！');
+    }
+  }
+</script>
+<script>
+  function handleCheckboxClick(checkbox) {
+      const checkboxes = document.getElementsByName('selected_books');
+      checkboxes.forEach((cb) => {
+          if (cb !== checkbox) {
+              cb.checked = false;
+          }
+      });
+  }
+  </script>
+{% include "script.html" %}
+</html>

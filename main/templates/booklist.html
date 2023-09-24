@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>网上书店系统</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+    <style>
+        /* 样式用于区分搜索区域和图书表格区域 */
+        .search-area {
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    {% include "navigate.html" with username=username %}
+    <div class="container mt-4">
+        <h1>图书列表</h1>
+        <div class="search-area">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-row align-items-center">
+                    <div class="form-group col-md-4">
+                        <label for="search_type">选择搜索类型:</label>
+                        <select class="form-control" id="search_type" name="search_type">
+                            <option value=" "> </option>
+                            <option value="name">按名称搜索</option>
+                            <option value="price">按价格区间搜索</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4" id="name_search" style="display: none;">
+                        <label for="book_name">图书名称:</label>
+                        <input type="text" class="form-control" id="book_name" name="book_name" placeholder="输入图书名称">
+                    </div>
+                    <div class="form-group col-md-4" id="price_search" style="display: none;">
+                        <input type="number" class="form-control" placeholder="最低价格" name="min_price">
+                        <input type="number" class="form-control" placeholder="最高价格" name="max_price">
+                    </div>
+                </div>
+                <button type="submit" name="search" class="btn btn-primary">搜索</button>
+            </form>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>选择</th>
+                    <th>图书编号</th>
+                    <th>图书类型</th>
+                    <th>图书名称</th>
+                    <th>图书价格</th>
+                    <th>图书余量</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                    <tr>
+                        <td><input type="checkbox" name="selected_books" value="{{ book.bnum }}" onclick="handleCheckboxClick(this)"></td>
+                        <td>{{ book.bnum }}</td>
+                        <td>{{ book.btype }}</td>
+                        <td>{{ book.bname }}</td>
+                        <td>{{ book.price }}</td>
+                        <td>{{ book.overplus }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" name="buy" class="btn btn-primary">订购选定图书</button>
+    </div>
+    <!-- 引入Bootstrap的JavaScript文件 -->
+    <footer class="text-center py-4">
+      <p>&copy; 2023 网上书店系统</p>
+    </footer>
+    <script src="/static/jquery-3.5.1.slim.min.js"></script>
+    <script src="/static/bootstrap.min.js"></script>
+
+</body>
+{% include "script.html" %}
+<script>
+    function handleCheckboxClick(checkbox) {
+        const checkboxes = document.getElementsByName('selected_books');
+        checkboxes.forEach((cb) => {
+            if (cb !== checkbox) {
+                cb.checked = false;
+            }
+        });
+    }
+</script>
+<script>
+    const searchType = document.getElementById('search_type');
+    const nameSearch = document.getElementById('name_search');
+    const priceSearch = document.getElementById('price_search');
+
+    searchType.addEventListener('change', () => {
+        if (searchType.value === 'name') {
+            nameSearch.style.display = 'block';
+            priceSearch.style.display = 'none';
+        } else if (searchType.value === 'price') {
+            nameSearch.style.display = 'none';
+            priceSearch.style.display = 'block';
+        } else {
+            nameSearch.style.display = 'none';
+            priceSearch.style.display = 'none';
+        }
+    });
+</script>
+</html>
