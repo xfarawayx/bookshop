@@ -40,33 +40,33 @@
                     </div>
                 </div>
                 <button type="submit" name="search" class="btn btn-primary">搜索</button>
-            </form>
-        </div>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>选择</th>
-                    <th>图书编号</th>
-                    <th>图书类型</th>
-                    <th>图书名称</th>
-                    <th>图书价格</th>
-                    <th>图书余量</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for book in books %}
+            </div>
+            <table class="table table-bordered">
+                <thead>
                     <tr>
-                        <td><input type="checkbox" name="selected_books" value="{{ book.bnum }}" onclick="handleCheckboxClick(this)"></td>
-                        <td>{{ book.bnum }}</td>
-                        <td>{{ book.btype }}</td>
-                        <td>{{ book.bname }}</td>
-                        <td>{{ book.price }}</td>
-                        <td>{{ book.overplus }}</td>
+                        <th>选择</th>
+                        <th>图书编号</th>
+                        <th>图书类型</th>
+                        <th>图书名称</th>
+                        <th>图书价格</th>
+                        <th>图书余量</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <button type="submit" name="buy" class="btn btn-primary">订购选定图书</button>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                        <tr>
+                            <td><input type="checkbox" name="selected_books" value="{{ book.bnum }}" onclick="handleCheckboxClick(this)"></td>
+                            <td>{{ book.bnum }}</td>
+                            <td>{{ book.btype }}</td>
+                            <td>{{ book.bname }}</td>
+                            <td>{{ book.price }}</td>
+                            <td>{{ book.overplus }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" name="buy" class="btn btn-primary">订购选定图书</button>
+        </form>
     </div>
     <!-- 引入Bootstrap的JavaScript文件 -->
     <footer class="text-center py-4">

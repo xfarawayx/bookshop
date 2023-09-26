@@ -25,11 +25,11 @@
                 <label for="address">收货地址:</label>
                 <input type="text" class="form-control" id="address" name="address" value="{{ user.address }}">
             </div>
-            <button type="submit" class="btn btn-primary">保存</button>
-            <div class="form-check">
+            <div class="form-check  py-3">
                 <input type="checkbox" class="form-check-input" id="state" name="state" {% if user.state %} checked {% endif %}>
                 <label class="form-check-label" for="state">审核状态</label>
             </div>
+            <button type="submit" class="btn btn-primary">保存</button>
         </form>
     </div>
 
