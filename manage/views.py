@@ -17,11 +17,40 @@ def bookManage(request):
         return HttpResponseRedirect('/loginManager')
     books = Book.objects.all()
     if request.method == 'POST':
-        selected_books = request.POST.getlist('selected_books')
-        if len(selected_books) == 0:
-            return redirect('bookManage')
-        book = Book.objects.get(bnum=selected_books[0])
-        return HttpResponseRedirect('/bookEdit/' + book.bnum)
+        if 'search' in request.POST:
+            search_type = request.POST.get('search_type')
+            if search_type == 'name':
+                book_name = request.POST.get('book_name')
+                if book_name:
+                    books = books.filter(bname__icontains=book_name)
+            elif search_type == 'price':
+                min_price = request.POST.get('min_price')
+                max_price = request.POST.get('max_price')
+                if min_price and max_price:
+                    books = books.filter(price__gte=min_price, price__lte=max_price)
+                elif min_price:
+                    books = books.filter(price__gte=min_price)
+                elif max_price:
+                    books = books.filter(price__lte=max_price)
+            elif search_type == 'combined':
+                min_overplus = request.POST.get('min_overplus')
+                min_price = request.POST.get('min_price')
+                max_price = request.POST.get('max_price')
+                if not min_overplus:
+                    messages.error(request, '请输入图书余量！')
+                    return redirect('booklist')
+                if min_price and max_price:
+                    books = books.filter(overplus__gte=min_overplus, price__gte=min_price, price__lte=max_price)
+                elif min_price:
+                    books = books.filter(overplus__gte=min_overplus, price__gte=min_price)
+                elif max_price:
+                    books = books.filter(overplus__gte=min_overplus, price__lte=max_price)
+        else:
+            selected_books = request.POST.getlist('selected_books')
+            if len(selected_books) == 0:
+                return redirect('bookManage')
+            book = Book.objects.get(bnum=selected_books[0])
+            return HttpResponseRedirect('/bookEdit/' + book.bnum)
     return render(request, 'bookManage.html', {'books': books})
 
 def bookEdit(request, bnum):

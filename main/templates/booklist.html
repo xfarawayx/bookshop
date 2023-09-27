@@ -28,6 +28,7 @@
                             <option value=" "> </option>
                             <option value="name">按名称搜索</option>
                             <option value="price">按价格区间搜索</option>
+                            <option value="combined">按图书余量和价格区间搜索</option>
                         </select>
                     </div>
                     <div class="form-group col-md-4" id="name_search" style="display: none;">
@@ -35,6 +36,11 @@
                         <input type="text" class="form-control" id="book_name" name="book_name" placeholder="输入图书名称">
                     </div>
                     <div class="form-group col-md-4" id="price_search" style="display: none;">
+                        <input type="number" class="form-control" placeholder="最低价格" name="min_price">
+                        <input type="number" class="form-control" placeholder="最高价格" name="max_price">
+                    </div>
+                    <div class="form-group col-md-4" id="combined_search" style="display: none;">
+                        <input type="number" class="form-control" placeholder="最低余量" name="min_overplus">
                         <input type="number" class="form-control" placeholder="最低价格" name="min_price">
                         <input type="number" class="form-control" placeholder="最高价格" name="max_price">
                     </div>
@@ -91,17 +97,25 @@
     const searchType = document.getElementById('search_type');
     const nameSearch = document.getElementById('name_search');
     const priceSearch = document.getElementById('price_search');
+    const combinedSearch = document.getElementById('combined_search');
 
     searchType.addEventListener('change', () => {
-        if (searchType.value === 'name') {
+        if (searchType.value === 'combined') {
+            combinedSearch.style.display = 'block';
+            nameSearch.style.display = 'none';
+            priceSearch.style.display = 'none';
+        } else if (searchType.value === 'name') {
             nameSearch.style.display = 'block';
             priceSearch.style.display = 'none';
+            combinedSearch.style.display = 'none';
         } else if (searchType.value === 'price') {
             nameSearch.style.display = 'none';
             priceSearch.style.display = 'block';
+            combinedSearch.style.display = 'none';
         } else {
             nameSearch.style.display = 'none';
             priceSearch.style.display = 'none';
+            combinedSearch.style.display = 'none';
         }
     });
 </script>

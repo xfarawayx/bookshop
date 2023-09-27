@@ -51,6 +51,20 @@ def booklist(request):
                     books = books.filter(price__gte=min_price)
                 elif max_price:
                     books = books.filter(price__lte=max_price)
+            elif search_type == 'combined':
+                min_overplus = request.POST.get('min_overplus')
+                min_price = request.POST.get('min_price')
+                max_price = request.POST.get('max_price')
+                if not min_overplus:
+                    messages.error(request, '请输入图书余量！')
+                    return redirect('booklist')
+                if min_price and max_price:
+                    books = books.filter(overplus__gte=min_overplus, price__gte=min_price, price__lte=max_price)
+                elif min_price:
+                    books = books.filter(overplus__gte=min_overplus, price__gte=min_price)
+                elif max_price:
+                    books = books.filter(overplus__gte=min_overplus, price__lte=max_price)
+
     
     return render(request, 'booklist.html', {'books': books, 'username': user.uname})
 
@@ -91,7 +105,7 @@ def modify(request):
     if npsw != npswc:
         messages.error(request, '两次输入的密码不一致！')
         return redirect('modify')
-    if len(npsw) < 6:
+    if npsw != '' and len(npsw) < 6:
         messages.error(request, '密码长度至少为6！')
         return redirect('modify')
     if usr != '':
